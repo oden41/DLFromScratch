@@ -53,6 +53,7 @@ def predict(network,x):
     y = softmax(a3)
     return y
 
+#個別
 x,t = get_data()
 network = init_network()
 
@@ -65,3 +66,16 @@ for i in range(len(x)):
 
 print('Accuracy:' + str(acc / len(x)))
 
+#バッチ
+x,t = get_data()
+network = init_network()
+
+batch_size = 100
+acc = 0
+for i in range(0,len(x),batch_size):
+    x_batch = x[i:i + batch_size]
+    y_batch = predict(network, x_batch)
+    p = np.argmax(y_batch,axis=1)
+    acc += np.sum(p == t[i:i+batch_size])
+
+print('Accuracy:' + str(acc / len(x)))
